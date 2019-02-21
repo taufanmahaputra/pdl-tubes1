@@ -12,15 +12,47 @@
         <div class="alert alert-primary" role="alert">
             Algebra Operations
         </div>
-        <div class="row">
-            <form method="post" action="/select">
-                <button type="submit" class="btn btn-primary">SELECT</button>
-            </form>
 
-            <form method="post" action="/insert">
-                <button type="submit" class="btn btn-primary">INSERT</button>
-            </form>
+        <div class="accordion" id="accordionExample">
+
+            <div class="card">
+                <div class="card-header" id="select">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#selectContent" aria-expanded="true" aria-controls="selectContent">
+                            Select
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="selectContent" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <form method="post" action="/select">
+                            <button type="submit" class="btn btn-primary">SELECT</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header" id="insert">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#insertContent" aria-expanded="true" aria-controls="insertContent">
+                            Insert
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="insertContent" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <form method="post" action="/select">
+                            <button type="submit" class="btn btn-primary">INSERT</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
+        
+        <hr />
 
         <table class="table table-dark">
             <thead>
