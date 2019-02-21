@@ -15,8 +15,22 @@ router.post('/select', function(req, res, next) {
 });
 
 router.post('/insert', function(req, res, next) {
-  sequelizeClient.query("SELECT * FROM room_reservations").spread((results, metadata) => {
-    res.render('index', { title: 'PDL TUBES 1 | SELECT', results: results})
+  const roomNumber = req.body.room_number
+  const pic = req.body.pic
+  const about = req.body.about
+
+  sequelizeClient.query(`INSERT INTO room_reservations (room_number, pic, about)  VALUES (${roomNumber}, '${pic}', '${about}')`).spread((results, metadata) => {
+    res.render('index', { title: 'PDL TUBES 1 | INSERT', results: [] })
+  })
+});
+
+router.post('/update', function(req, res, next) {
+  const roomNumber = req.body.room_number
+  const pic = req.body.pic
+  const about = req.body.about
+
+  sequelizeClient.query(`UPDATE room_reservations SET pic = '${pic}', about = '${about}' WHERE room_number = ${roomNumber}`).spread((results, metadata) => {
+    res.render('index', { title: 'PDL TUBES 1 | UPDATE', results: [] })
   })
 });
 

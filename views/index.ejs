@@ -44,14 +44,44 @@
 
                 <div id="insertContent" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
-                        <form method="post" action="/select">
+                        <form method="post" action="/insert">
+                            <input type="number" class="form-control" name="room_number" placeholder="Room Number">
+                            <br>
+                            <input type="text" class="form-control" name="pic" placeholder="PIC">
+                            <br>
+                            <input type="text" class="form-control" name="about" placeholder="About">
+                            <br>
                             <button type="submit" class="btn btn-primary">INSERT</button>
                         </form>
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header" id="update">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#updateContent" aria-expanded="true" aria-controls="updateContent">
+                            Update
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="updateContent" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <form method="post" action="/update">
+                            Untuk <input type="number" class="form-control" name="room_number" placeholder="Room Number">
+                            <br>
+                            <input type="text" class="form-control" name="pic" placeholder="PIC">
+                            <br>
+                            <input type="text" class="form-control" name="about" placeholder="About">
+                            <br>
+                            <button type="submit" class="btn btn-primary">UPDATE</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        
+
         <hr />
 
         <table class="table table-dark">
