@@ -20,4 +20,11 @@ router.post('/insert', function(req, res, next) {
   })
 });
 
+router.post('/union', function(req, res, next) {
+  sequelizeClient.query("SELECT * FROM room_reservations").spread((results, metadata) => {
+    res.render('index', { title: 'PDL TUBES 1 | SELECT', results: results})
+  })
+});
+
 module.exports = router;
+

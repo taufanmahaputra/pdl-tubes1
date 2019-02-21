@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const sequelizeClient = new Sequelize('postgres://localhost:5432/pdl_schema');
+const sequelizeClient = new Sequelize('postgres://postgres@localhost:5432/pdl_schema');
 
 sequelizeClient
   .authenticate()
