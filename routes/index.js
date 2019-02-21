@@ -24,4 +24,14 @@ router.post('/insert', function(req, res, next) {
   })
 });
 
+router.post('/update', function(req, res, next) {
+  const roomNumber = req.body.room_number
+  const pic = req.body.pic
+  const about = req.body.about
+
+  sequelizeClient.query(`UPDATE room_reservations SET pic = '${pic}', about = '${about}' WHERE room_number = ${roomNumber}`).spread((results, metadata) => {
+    res.render('index', { title: 'PDL TUBES 1 | UPDATE', results: [] })
+  })
+});
+
 module.exports = router;
