@@ -1,4 +1,5 @@
 var express = require('express');
+var moment = require('moment');
 var router = express.Router();
 
 var { sequelizeClient } = require('../core/database')
@@ -34,10 +35,34 @@ router.post('/update', function(req, res, next) {
   })
 });
 
-router.post('/union', function(req, res, next) {
-  sequelizeClient.query("SELECT * FROM room_reservations").spread((results, metadata) => {
-    res.render('index', { title: 'PDL TUBES 1 | SELECT', results: results})
-  })
+router.post('/union', async function(req, res, next) {
+  current = await sequelizeClient.query("SELECT * FROM room_reservations")
+  histories = await sequelizeClient.query("SELECT * FROM room_reservations_history")
+
+  
+  var currentLength = current[0].length
+  var historiesLength = histories[0].length
+
+  for(var i = 0; i < currentLength; i++){
+      var unionValidTime = []
+      unionValidTime.push(current[0][i].valid_time)
+      for(var j = 0; j < historiesLength; j++){
+          if(
+            current[0][i].room_number == histories[0][j].room_number &&
+            current[0][i].pic == histories[0][j].pic &&
+            current[0][i].about == histories[0][j].about
+            )
+            {
+              unionValidTime.push(histories[0][j].valid_time)
+            }
+          current[0][i].valid_time = unionValidTime
+      }
+  }
+
+  console.log(current[0][0].valid_time)
+  console.log(current[0][1].valid_time)
+  console.log(histories[0])
+   
 });
 
 module.exports = router;
