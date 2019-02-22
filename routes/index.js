@@ -57,11 +57,9 @@ router.post('/union', async function(req, res, next) {
             }
           current[0][i].valid_time = unionValidTime
       }
-  }
+  } 
 
-  console.log(current[0][0].valid_time)
-  console.log(current[0][1].valid_time)
-  console.log(histories[0])
+  res.render('index', {title: 'PDL TUBES 1 | UNION', results: current[0]})
    
 });
 
