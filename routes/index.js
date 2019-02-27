@@ -94,5 +94,136 @@ router.post('/union', async function(req, res, next) {
    
 });
 
+router.post('/join', async function(req, res, next) {
+  // sequelizeClient.query("SELECT room_reservations.room_number, room_reservations.pic, room_reservations.about, room_doctors.name, room_reservations.valid_time, room_doctors.valid_time FROM room_doctors INNER JOIN room_reservations ON (room_doctors.room_number = room_reservations.room_number)")
+  // .spread((results, metadata) => {
+  //   res.render('index', { title: 'PDL TUBES 1 | JOIN', results: results})
+  // })
+
+  current = await sequelizeClient.query("SELECT room_reservations_history.room_number, room_reservations_history.pic, room_reservations_history.about, room_doctors_history.name, room_reservations_history.valid_time as A, room_doctors_history.valid_time as B, room_doctors_history.valid_time as valid_time FROM room_doctors_history INNER JOIN room_reservations_history ON (room_doctors_history.room_number = room_reservations_history.room_number)")
+
+  // console.log(current[0])
+  result_array = []
+
+  for(var i = 0; i < current[0].length; i++) {
+    
+    vs_a = await current[0][i].a[0]
+    ve_a = await current[0][i].a[1]
+
+    vs_b = await current[0][i].b[0]
+    ve_b = await current[0][i].b[1]
+
+    if (ve_a != null && ve_b != null) {
+      if (moment(vs_a).isSameOrBefore(vs_b)) {
+        // start a sama atau sebelum b
+
+        if (moment(ve_a).isSameOrBefore(vs_b)) {
+          // start a sama atau sebelum start b
+          // ending a sama atau sebelum start b
+          vs_result = null
+          ve_result = null
+
+        } else {
+          // start a sama atau sebelum start b
+          // ending a setelah start b
+
+          vs_result = vs_b
+
+          if (moment(ve_a).isSameOrBefore(ve_b)) {
+            // start a sama atau sebelum start b
+            // ending a setelah start b
+            // ending a sebelum ending b
+
+            ve_result = ve_a
+
+          } else {
+            // start a sama atau sebelum start b
+            // ending a setelah start b
+            // ending a setelah ending b
+
+            ve_result = ve_b
+
+          }
+        }
+      } else {
+        // start b sebelum start a
+
+        if (moment(ve_b).isSameOrBefore(vs_a)) {
+          vs_result = null
+          ve_result = null
+
+        } else {
+
+          vs_result = vs_a
+
+          if (moment(ve_b).isSameOrBefore(ve_a)) {
+            ve_result = ve_b
+
+          } else {
+            ve_result = vs_a
+
+          }
+        }
+      }
+    } else if (ve_a == null && ve_b == null) {
+      vs_result = null
+      ve_result = null
+
+    } else if (ve_b != null) {
+      // ve_a == null
+
+      if (moment(vs_b).isSameOrBefore(vs_a)) {
+        if (moment(ve_b).isSameOrBefore(vs_a)) {
+          vs_result = null
+          ve_result = null
+
+        } else {
+          vs_result = vs_a
+          ve_result = ve_b
+
+        }
+      } else {
+        vs_result = vs_b
+        ve_result = ve_b
+
+      }
+    } else if (ve_a != null) {
+      // ve_b == null
+
+      if (moment(vs_a).isSameOrBefore(vs_b)) {
+        if (moment(ve_a).isSameOrBefore(vs_b)) {
+          vs_result = null
+          ve_result = null
+
+        } else {
+          vs_result = vs_b
+          ve_result = ve_a
+
+        }
+      } else {
+        vs_result = vs_a
+        ve_result = ve_a
+
+      }
+    }
+
+  current[0][i].valid_time[0] = vs_result
+  current[0][i].valid_time[1] = ve_result
+
+  if (vs_result != null && ve_result != null) {
+    delete current[0][i].a
+    delete current[0][i].b
+    result_array.push(current[0][i])
+  }
+
+  }
+
+  res.render('index', {title: 'PDL TUBES 1 | JOIN', join_results: result_array})
+
+  // console.log(result_array)
+
+});
+
 module.exports = router;
+
 

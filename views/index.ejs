@@ -107,7 +107,7 @@
             </div>
 
             <div class="card">
-                <div class="card-header" id="select">
+                <div class="card-header" id="union">
                     <h2 class="mb-0">
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#unionContent" aria-expanded="true" aria-controls="unionContent">
                             Union
@@ -123,10 +123,29 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header" id="join">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#joinContent" aria-expanded="true" aria-controls="joinContent">
+                            Join
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="joinContent" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <form method="post" action="/join">
+                            <button type="submit" class="btn btn-primary">JOIN</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <hr />
 
+        <% if (typeof results != "undefined") { %>
         <table class="table table-dark">
             <thead>
             <tr>
@@ -149,6 +168,35 @@
             <% })}%>
             </tbody>
         </table>
+        <% } %>
+
+        <% if (typeof join_results != "undefined") { %>
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Room Number</th>
+                <th scope="col">PIC</th>
+                <th scope="col">About</th>
+                <th scope="col">Room Doctor</th>
+                <th scope="col">Valid Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if (join_results !== undefined) { join_results.forEach(function(row) { %>
+            <tr>
+                <th scope="row"><%= row.id %></th>
+                <td><%= row.room_number %></td>
+                <td><%= row.pic %></td>
+                <td><%= row.about %></td>
+                <td><%= row.name %></td>
+                <td><%= row.valid_time %></td>
+            </tr>
+            <% })}%>
+            </tbody>
+        </table>
+        <% } %>
+
     </div>
   </body>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
